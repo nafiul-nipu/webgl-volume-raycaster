@@ -38,15 +38,8 @@ const center = vec3.set(vec3.create(), 0.5, 0.5, 0.5);
 const up = vec3.set(vec3.create(), 0.0, 1.0, 0.0);
 
 var volumes = {
-	"Fuel": "7d87jcsh0qodk78/fuel_64x64x64_uint8.raw",
-	"Neghip": "zgocya7h33nltu9/neghip_64x64x64_uint8.raw",
-	"Hydrogen Atom": "jwbav8s3wmmxd5x/hydrogen_atom_128x128x128_uint8.raw",
-	"Boston Teapot": "w4y88hlf2nbduiv/boston_teapot_256x256x178_uint8.raw",
-	"Engine": "ld2sqwwd3vaq4zf/engine_256x256x128_uint8.raw",
-	"Bonsai": "rdnhdxmxtfxe0sa/bonsai_256x256x256_uint8.raw",
-	"Foot": "ic0mik3qv4vqacm/foot_256x256x256_uint8.raw",
-	"Skull": "5rfjobn0lvb7tmo/skull_256x256x256_uint8.raw",
-	"Aneurysm": "3ykigaiym8uiwbp/aneurism_256x256x256_uint8.raw",
+	"2.32": "data/2.32_gaus.csv",
+	"2.4": "data/2.4_gaus.csv",
 };
 
 var colormaps = {
@@ -59,9 +52,12 @@ var colormaps = {
 };
 
 var loadVolume = function(file, onload) {
+	// console.log(file)
 	var m = file.match(fileRegex);
+	// console.log(m)
 	var volDims = [parseInt(m[2]), parseInt(m[3]), parseInt(m[4])];
 	
+	// var url = file;
 	var url = "https://www.dl.dropboxusercontent.com/s/" + file + "?dl=1";
 	var req = new XMLHttpRequest();
 	var loadingProgressText = document.getElementById("loadingText");
@@ -99,10 +95,26 @@ var loadVolume = function(file, onload) {
 var selectVolume = function() {
 	var selection = document.getElementById("volumeList").value;
 	history.replaceState(history.state, "#" + selection, "#" + selection);
+	console.log(volumes[selection])
+	let url = `${volumes[selection]}`
+	console.log(url)
+	let dataBuffer = []
+	let positions = []
+	d3.csv(url, data => {
+		
+		positions.push((parseFloat(data['Density'])));
 
-	loadVolume(volumes[selection], function(file, dataBuffer) {
-		var m = file.match(fileRegex);
-		var volDims = [parseInt(m[2]), parseInt(m[3]), parseInt(m[4])];
+	}).then(function() {
+		dataBuffer = new Uint8Array(positions)
+		console.log(dataBuffer)	
+
+		// var selection = document.getElementById("volumeList").value;
+		// history.replaceState(history.state, "#" + selection, "#" + selection);
+
+	// loadVolume(volumes[selection], function(file, dataBuffer) {
+		// console.log(dataBuffer)
+		// var m = file.match(fileRegex);
+		var volDims = [100,100,100];
 
 		var tex = gl.createTexture();
 		gl.activeTexture(gl.TEXTURE0);
@@ -173,6 +185,9 @@ var selectVolume = function() {
 			volumeTexture = tex;
 		}
 	});
+
+
+	// });
 }
 
 var selectColormap = function() {
