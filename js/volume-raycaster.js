@@ -40,6 +40,7 @@ const up = vec3.set(vec3.create(), 0.0, 1.0, 0.0);
 var volumes = {
 	"2.32": "data/2.32_gaus.csv",
 	"2.4": "data/2.4_gaus.csv",
+	"2.4_temp": "data/2.4_gaus_temp.csv",
 };
 
 var colormaps = {
