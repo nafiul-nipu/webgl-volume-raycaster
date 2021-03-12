@@ -38,31 +38,27 @@ const center = vec3.set(vec3.create(), 0.5, 0.5, 0.5);
 const up = vec3.set(vec3.create(), 0.0, 1.0, 0.0);
 
 var volumes = {
-	"coaxial": "data/0.17.csv",
-	"heavyMesh": "data/1.64.csv",
-	"firstData": "data/2.4.csv",
-	"wedgeRe": "data/2_resample.csv",
-	"wedge12812816": "data/2_128x128x16.csv",
-	"wedge12812816FB": "data/2_128x128x16_FB.csv",
-	"wedge10010010FB": "data/2_100x100x10_FB.csv",
-	"wedge1281284FB": "data/2_128x128x4_FB.csv",
-	"wedge1281288_0.1FB": "data/2_128x128x8_0.1_FB.csv",
-	"wedge1281288_0.01FB": "data/2_128x128x8_0.01_FB.csv",
+	"contrails": "data/0.16_contrails.csv",
+	"temp": "data/0.16_T.csv",
+	"temp_scaled": "data/0.16_T_scaled.csv",
+	"temp_scaled_noFV": "data/0.16_T_scaled_noFV.csv",
+	"yh20_scaled": "data/0.16_yh20_scaled.csv",
+	"yh20_scaled100": "data/0.16_yh20_scaled100.csv",
+	"0.16": "data/0.16.csv",
+	"0.16_156": "data/0.16_156.csv"
 	
 };
 
 var volumeDim = {
-	"coaxial": [100,100,100],
-	"heavyMesh": [100,100,100],
-	"firstData": [100,100,100],
-	"wedgeRe": [100,100,100],
-	"wedge12812816": [128,128,16],
-	"wedge12812816FB": [128,128,16],
-	"wedge10010010FB": [100,100,10],
-	"wedge1281284FB": [128,128,4],
-	"wedge1281288_0.1FB": [128,128,8],
-	"wedge1281288_0.01FB": [128,128,8],
-
+	
+	"contrails": [128,128,4],
+	"temp": [128,128,16],
+	"temp_scaled": [128,128,16],
+	"temp_scaled_noFV": [128,128,16],
+	"yh20_scaled" : [128,128,16],
+	"yh20_scaled100" : [128,128,16],
+	"0.16": [128,128,8],
+	"0.16_156": [156,128,8]
 	
 };
 
@@ -90,7 +86,8 @@ var selectVolume = function() {
 
 	}).then(function() {
 		dataBuffer = new Uint8Array(positions)
-		console.log(dataBuffer)			
+		// dataBuffer = positions
+		// console.log(dataBuffer)			
 
 		var volDims = volumeDim[selection];
 
